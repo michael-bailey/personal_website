@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html
+	lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,6 +54,12 @@
 			</div>
 			<footer class="text-center text-muted mt-auto py-3">
 				<p>&copy; 2025 Michael Bailey — All rights reserved.</p>
+				<div>
+					<a th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
+					<span sec:authorize="isAuthenticated()">
+					  Logged in as <a th:href="@{/admin}" class="text-decoration-none"><b sec:authentication="name"></b></a>
+					</span>
+				</div>
 			</footer>
 		</div>
 

@@ -31,6 +31,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 
 	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
 	implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:7.6.0"))
@@ -42,7 +43,7 @@ dependencies {
 
 	runtimeOnly("org.postgresql:postgresql")
 
-	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
