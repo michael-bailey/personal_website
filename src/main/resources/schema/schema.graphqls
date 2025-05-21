@@ -1,0 +1,26 @@
+type Query {
+    getBlogPosts: [BlogPost!]!
+}
+
+type Mutation {
+    createBlogPost(
+        name: String!,
+        title: String!,
+        content: String!,
+    ): BlogPost!
+}
+
+interface Node {
+    id: ID!
+}
+
+type BlogPost implements Node {
+    id: ID!
+
+    name: String!
+    title: String!
+    date: String!
+    content: String!
+
+    url: String!
+}
