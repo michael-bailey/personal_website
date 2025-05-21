@@ -47,13 +47,15 @@ class BlogController(
 
 		val htmlContent = markdownService.render(blogPost.content)
 
+		val blogPosts = blogService.getAllBlogPosts()
+
+		model.addAttribute("blogPosts", blogPosts)
+
 		model.addAttribute("blogPost", mapOf(
 			"title" to blogPost.title,
 			"date" to blogPost.date.toString(),
 			"content" to htmlContent
 		))
-
-		model.addAttribute("allPosts", blogService.getAllBlogPosts())
 
 		return "blog"
 	}
