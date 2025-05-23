@@ -11,13 +11,15 @@
 					<small>Software Engineer</small>
 				</div>
 
-				<ul class="nav nav-pills flex-column" th:each="blogPost: ${blogPosts}">
+				<ul class="nav nav-pills flex-column">
 					<li class="nav-item">
 						<a class="nav-link" href="/" th:if="${blogPost != null}">← Go Back</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" th:href="${blogPost.url}" th:text="${blogPost.title}">Blog Link</a>
-					</li>
+					<th:block th:each="blogPost: ${blogPosts}">
+						<li class="nav-item">
+							<a class="nav-link" th:href="${blogPost.url}" th:text="${blogPost.title}">Blog Link</a>
+						</li>
+					</th:block>
 				</ul>
 			</div>
 		</div>

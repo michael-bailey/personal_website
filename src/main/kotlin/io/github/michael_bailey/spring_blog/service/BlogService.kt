@@ -16,8 +16,7 @@ class BlogService(private val repo: BlogRepository) {
      * Retrieves a blog post by its unique name.
      *
      * @param name the name identifier of the blog post.
-     * @return the BlogPostModel if found.
-     * @throws NoSuchElementException if no post is found with the given name.
+     * @return the BlogPostModel if found, or null.
      */
     fun getByName(name: String): BlogPostModel? =
         repo.findByName(name).getOrNull()
@@ -38,13 +37,11 @@ class BlogService(private val repo: BlogRepository) {
      * @return a BlogPost DTO representing the newly created post.
      */
     fun createPost(name: String, title: String, content: String): BlogPost {
-
         val post = BlogPostModel(
             name = name,
             title = title,
             content = content
         )
-
         repo.save(post)
 
         return BlogPost(

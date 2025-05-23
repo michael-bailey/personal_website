@@ -1,6 +1,7 @@
 package io.github.michael_bailey.spring_blog.controller
 
 import io.github.michael_bailey.spring_blog.service.BlogService
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -16,12 +17,17 @@ class AdminController(private val blogService: BlogService) {
 
 	@PostMapping("/create-post")
 	fun createPost(
-	    @RequestParam name: String,
-	    @RequestParam title: String,
-	    @RequestParam content: String
+		@RequestParam name: String,
+		@RequestParam title: String,
+		@RequestParam content: String,
+		res: HttpServletResponse
 	): String {
-	    blogService.createPost(name, title, content)
-	    return "redirect:/admin"
+		blogService.createPost(name, title, content)
+
+		res.status = 302
+
+
+		return "redirect:/"
 	}
 
 }

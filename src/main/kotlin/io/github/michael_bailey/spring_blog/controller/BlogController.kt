@@ -27,9 +27,7 @@ class BlogController(
 	 */
 	@GetMapping("/blog/")
 	fun redirectWithNoBlogName(res: HttpServletResponse): String {
-
 		res.status = 404
-
 		return "error"
 	}
 
@@ -41,9 +39,9 @@ class BlogController(
 	 * @return the name of the Thymeleaf template to render.
 	 */
 	@GetMapping("/blog/{name}")
-	fun getBlog(@PathVariable name: String, model: Model): String {
+	fun getBlog(@PathVariable name: String, model: Model, res: HttpServletResponse): String {
 
-		val blogPost = blogService.getByName(name) ?: return "forward:/blog/"
+		val blogPost = blogService.getByName(name) ?: return redirectWithNoBlogName(res)
 
 		val htmlContent = markdownService.render(blogPost.content)
 
