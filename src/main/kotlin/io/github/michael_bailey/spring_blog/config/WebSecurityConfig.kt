@@ -39,6 +39,7 @@ class WebSecurityConfig {
 			}
 			formLogin {
 				loginPage = "/login"
+				defaultSuccessUrl("/admin", true)
 				permitAll()
 			}
 			csrf {
