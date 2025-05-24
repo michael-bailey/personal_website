@@ -46,7 +46,6 @@ jobs:
           username: ${{ secrets.PI_USER }}
           key: ${{ secrets.PI_SSH_KEY }}
           script: |
-            docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
             cd /srv/personal-blog
             docker compose pull
-            docker compose up -d
+            sudo systemctl restart spring-blog.service
