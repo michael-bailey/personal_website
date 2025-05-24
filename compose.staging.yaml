@@ -10,7 +10,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   spring-blog-app:
-    image: ghcr.io/michael-bailey/personal_website:latest
+    build: .
     container_name: spring-blog-app
     ports:
       - "8484:8080"

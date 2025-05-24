@@ -1,9 +1,12 @@
 package io.github.michael_bailey.spring_blog.controller
 
 import io.github.michael_bailey.spring_blog.service.BlogService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import javax.sql.DataSource
+
 
 /**
  * Controller that handles root-level web requests and prepares data for the homepage.
@@ -15,6 +18,9 @@ class RootController(
 
 ) {
 
+	@Autowired
+	var dataSource: DataSource? = null
+
 	/**
 	 * Handles requests to the root path ("/").
 	 *
@@ -23,6 +29,8 @@ class RootController(
 	 */
 	@GetMapping("/")
 	fun index(model: Model): String {
+		
+
 		val blogPosts = blogService.getAllBlogPosts()
 		model.addAttribute("blogPosts", blogPosts)
 		return "index"
