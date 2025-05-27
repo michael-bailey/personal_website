@@ -10,7 +10,9 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   spring-blog-app:
-    build: .
+    build:
+      dockerfile: ./docker/local/Dockerfile
+      context: .
     container_name: spring-blog-app
     ports:
       - "8484:8080"
