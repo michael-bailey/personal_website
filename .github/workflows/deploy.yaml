@@ -30,6 +30,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          dockerfile: ./docker/production/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
           platforms: linux/arm64
