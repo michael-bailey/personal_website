@@ -24,8 +24,6 @@ class WebSecurityConfig {
 	@Value("\${blog.password}")
 	private val password: String? = null
 
-
-
 	@Bean
 	@Throws(Exception::class)
 	fun securityFilterChain(http: HttpSecurity): SecurityFilterChain? {
@@ -33,12 +31,17 @@ class WebSecurityConfig {
 		http {
 			authorizeHttpRequests {
 				authorize("/", permitAll)
+				authorize("/img/**", permitAll)
+				authorize("/js/**", permitAll)
+				authorize("/css/**", permitAll)
 				authorize("/blog/**", permitAll)
+				authorize("/project/**", permitAll)
 				authorize("/admin/**", hasRole("ADMIN"))
 				authorize(anyRequest, authenticated)
 			}
 			formLogin {
 				loginPage = "/login"
+				defaultSuccessUrl("/admin", true)
 				permitAll()
 			}
 			csrf {
