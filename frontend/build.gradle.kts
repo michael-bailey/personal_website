@@ -16,5 +16,5 @@ tasks.register<Exec>("runFrontendDevelopment") {
 tasks.register<Exec>("buildFrontend") {
 	workingDir = file(".")
 	dependsOn(":frontend:installFrontend")
-	commandLine("sh", "-c", "npm", "build")
+	commandLine("sh", "-c", "npm run build")
 }

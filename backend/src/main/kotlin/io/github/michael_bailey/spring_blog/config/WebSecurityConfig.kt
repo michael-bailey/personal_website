@@ -1,6 +1,7 @@
 package io.github.michael_bailey.spring_blog.config
 
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -13,10 +14,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import java.util.logging.Level
+import kotlin.jvm.java
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory
 
 @Configuration
 @EnableWebSecurity
-class WebSecurityConfig {
+@EnableConfigurationProperties(CorsProperties::class)
+class WebSecurityConfig(
+	private val corsProperties: CorsProperties,
+) {
+
+	private val logger: Logger = LoggerFactory.getLogger(WebSecurityConfig::class.java.getName())
 
 	@Value("\${blog.username}")
 	private val username: String? = null
@@ -27,7 +40,7 @@ class WebSecurityConfig {
 	@Bean
 	@Throws(Exception::class)
 	fun securityFilterChain(http: HttpSecurity): SecurityFilterChain? {
-
+		logger.info("got allowed origins for CORS: ${corsProperties.allowedOrigins.toString()}")
 		http {
 			authorizeHttpRequests {
 				authorize("/", permitAll)
@@ -44,6 +57,7 @@ class WebSecurityConfig {
 				defaultSuccessUrl("/admin", true)
 				permitAll()
 			}
+			cors { }
 			csrf {
 				disable()
 			}
@@ -53,6 +67,20 @@ class WebSecurityConfig {
 		}
 
 		return http.build()
+	}
+
+	@Bean
+	fun corsConfigurationSource(): CorsConfigurationSource {
+		val configuration = CorsConfiguration()
+		configuration.allowedOrigins = corsProperties.allowedOrigins
+		configuration.allowedMethods =
+			listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
+		configuration.allowedHeaders = listOf("*")
+		configuration.allowCredentials = true
+
+		val source = UrlBasedCorsConfigurationSource()
+		source.registerCorsConfiguration("/**", configuration)
+		return source
 	}
 
 	@Bean
