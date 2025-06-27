@@ -60,7 +60,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
-          file: ./docker/Dockerfile
+          file: ./frontend/docker/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository }}-frontend:latest
           platforms: linux/arm64
