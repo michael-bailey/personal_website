@@ -11,7 +11,7 @@ services:
       - ./data:/var/lib/postgresql/data
 
   spring-blog-app:
-    image: ghcr.io/michael-bailey/personal_website:latest
+    image: ghcr.io/michael-bailey/personal_website-backend:latest
     container_name: spring-blog-app
     ports:
       - "8484:8080"
@@ -21,3 +21,13 @@ services:
       POSTGRES_URL: "jdbc:postgresql://postgres:5432/blogdb"
     env_file:
       - .env
+
+  nextjs-blog-app:
+    image: ghcr.io/michael-bailey/personal_website-frontend:latest
+    container_name: next-blog-app
+    ports:
+      - "8485:3000"
+    depends_on:
+      - spring-blog-app
+    environment:
+      HOST: 0.0.0.0
