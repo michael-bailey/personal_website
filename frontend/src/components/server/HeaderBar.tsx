@@ -8,7 +8,7 @@ interface HeaderBarProps {
 
 export default async function HeaderBar({className}: HeaderBarProps): Promise<ReactElement> {
 	return (
-		<header className={"grid grid-cols-1 grid-rows-3 sm:grid-cols-3 sm:grid-rows-1 h-min md:h-16 gap-2 sm:gap-8 px-4 " + (className ?? "")}>
+		<header className={"grid grid-cols-1 grid-rows-3 sm:grid-cols-3 sm:grid-rows-1 h-min sm:h-16 gap-2 sm:gap-8 px-4 " + (className ?? "")}>
 			<div className="flex-none content-center justify-self-center sm:justify-self-start text-2xl">Michael Bailey</div>
 			<div className="flex-1 content-center justify-self-center max-w-min">
 

@@ -18,10 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full bg-gray-100">
       <body className="min-h-screen bg-blend-color-dodge">
-			{/*md:grid-cols-[8em_auto_8em]*/}
 				<div className="grid min-h-screen grid-rows-[min-content_2em_auto_2em_min-content] grid-cols-[2em_auto_2em]  lg:grid-cols-[10%_auto_10%] xl:grid-cols-[20%_auto_20%] ">
 
-					<HeaderBar className="row-start-1 sticky top-0 col-start-2" />
+					<HeaderBar className="row-start-1 col-start-2 bg-background" />
 
 					<SectionSpacer className="h-8 col-start-2 row-start-2" />
 
