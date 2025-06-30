@@ -1,5 +1,4 @@
 import React, {ReactElement} from "react";
-import SectionSpacer from "@/components/server/SectionSpacer";
 import Section from "@/components/server/Section";
 
 
