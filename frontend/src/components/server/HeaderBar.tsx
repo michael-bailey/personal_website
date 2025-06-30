@@ -1,5 +1,6 @@
 import {ReactElement} from "react";
 import Link from "next/link";
+import ToggleWIP from "@/components/client/ToggleWIP";
 
 
 interface HeaderBarProps {
@@ -19,7 +20,7 @@ export default async function HeaderBar({className}: HeaderBarProps): Promise<Re
 				</nav>
 			</div>
 
-			<div className="flex-none content-center justify-self-center md:justify-self-end">Login</div>
+			<ToggleWIP />
 		</header>
 	)
 }

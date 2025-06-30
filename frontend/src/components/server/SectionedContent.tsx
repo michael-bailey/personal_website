@@ -10,10 +10,7 @@ interface SectionedContentProps {
 export default function SectionedContent({children}: SectionedContentProps) {
 	return (
 		<>
-			{children?.map((child, index) => <div  key={index}>
-				{child}
-				{index != (children.length-1) ? (<SectionSpacer className="h-8" />) : null}
-			</div>)}
+			{children}
 		</>
 	)
 }

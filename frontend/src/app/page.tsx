@@ -1,8 +1,7 @@
 import SectionedContent from "@/components/server/SectionedContent";
 import Section from "@/components/server/Section";
 import ProjectSection from "@/components/server/ProjectSection";
-import SelfHostingSection from "@/components/server/SelfHostingSection";
-import WorkInProgressWarning from "@/components/server/WorkInProgressWarning";
+import WorkInProgressStuff from "@/components/client/WorkInProgressStuff";
 
 export default function Home() {
 	return (
@@ -13,9 +12,8 @@ export default function Home() {
 						<h1 className="text-6xl">Welcome</h1>
 						<hr className="my-2" />
 						<p className="text-justify">Hi there, I&#39;m Michael Bailey.
-							I&#39;m a software engineer by trade
-							with a
-							deep interest in user-focused, technology and engineering.
+							I&#39;m a software engineer with a deep interest in user-focused,
+							technology and engineering.
 							I enjoy building tools to assist myself, and others, with my other
 							hobbies and interests.</p>
 						<p className="text-justify">This site is a place for me to share
@@ -112,34 +110,8 @@ export default function Home() {
 					</ProjectSection>
 				</Section>
 
-				<Section>
-					<WorkInProgressWarning />
-				</Section>
+				<WorkInProgressStuff />
 
-				<Section>
-					<div className="h-fit inline-block">
-						<h2 className="text-3xl mb-3">Self hosting</h2>
-						<p className="text-justify">
-							Here’s a selection of how I self host my projects. This includes
-							hardware, operating systems, architecture, software and
-							management.
-							Whilst I am new to self hosting,
-						</p>
-					</div>
-
-					<SelfHostingSection title="Raspberry Pi">
-						<p>Raspberry Pis are excellent little single board computers.</p>
-
-					</SelfHostingSection>
-
-					<SelfHostingSection title="Provisiond">
-						<p>Provisiond is a service provisioning and management tool. it is a
-							custom built tool, to pair with GitHub Workflows. Providing ways
-							to remotely update services over SSH</p>
-
-					</SelfHostingSection>
-
-				</Section>
 			</SectionedContent>
 		</div>
 	);
