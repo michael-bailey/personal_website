@@ -1,0 +1,1 @@
+export type ReactChild<T> = T | T[];
