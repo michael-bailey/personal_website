@@ -9,7 +9,6 @@ export default function ToggleWIP() {
 
 	return (
 		<button
-			className="flex-none content-center justify-self-center md:justify-self-end"
 			onClick={() => dispatch(toggleWIP()) }>
 			Show WIP
 		</button>
