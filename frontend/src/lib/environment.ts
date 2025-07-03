@@ -1,2 +1,2 @@
 
-export const getApiBase = () => process.env.NEXT_PUBLIC_API_HOSTNAME
+export const getApiBase = () => process.env.API_HOSTNAME
