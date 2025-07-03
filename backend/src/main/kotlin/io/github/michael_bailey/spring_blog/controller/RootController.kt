@@ -18,9 +18,6 @@ class RootController(
 
 ) {
 
-	@Autowired
-	var dataSource: DataSource? = null
-
 	/**
 	 * Handles requests to the root path ("/").
 	 *
@@ -29,8 +26,6 @@ class RootController(
 	 */
 	@GetMapping("/")
 	fun index(model: Model): String {
-		
-
 		val blogPosts = blogService.getAllBlogPosts()
 		model.addAttribute("blogPosts", blogPosts)
 		return "index"
