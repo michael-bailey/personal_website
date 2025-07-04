@@ -1,9 +1,11 @@
+
 plugins {
 	kotlin("jvm") version "1.9.25"
 	kotlin("plugin.spring") version "1.9.25"
 	id("org.springframework.boot") version "3.4.5"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("com.netflix.dgs.codegen") version "7.0.3"
+	id("com.apollographql.apollo") version "4.1.0"
 	id("jacoco")
 }
 
@@ -15,7 +17,6 @@ java {
 		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
-
 
 repositories {
 	mavenCentral()
@@ -32,8 +33,10 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 
+	implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.0.0"))
 	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
-	implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:7.6.0"))
+
+	implementation("com.apollographql.apollo:apollo-runtime")
 
 	implementation("org.commonmark:commonmark:0.21.0")
 
@@ -64,6 +67,16 @@ tasks.generateJava {
 	packageName = "io.github.michael_bailey.spring_blog.graphql"
 	generateClient = true
 	generateInterfaces = true
+}
+
+apollo {
+	service("github") {
+		packageName.set("com.github.client")
+		introspection {
+			endpointUrl.set("https://api.github.com/graphql")
+			schemaFile.set(file("src/main/graphql/github.graphqls"))
+		}
+	}
 }
 
 tasks.test {
