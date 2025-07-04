@@ -1,5 +1,6 @@
 type Query {
     getBlogPosts: [BlogPost!]!
+    getUserAvatar: String!
 }
 
 type Mutation {
@@ -23,4 +24,8 @@ type BlogPost implements Node {
     content: String!
 
     url: String!
+}
+
+interface UserInfo {
+    profilePictureURL: String!
 }

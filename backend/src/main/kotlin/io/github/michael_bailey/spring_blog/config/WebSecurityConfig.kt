@@ -52,6 +52,7 @@ class WebSecurityConfig(
 				authorize("/project/**", permitAll)
 				authorize("/login", permitAll)
 				authorize("/api/**", permitAll)
+				authorize("/graphql", permitAll)
 				authorize("/admin/**", hasRole("ADMIN"))
 				authorize(anyRequest, authenticated)
 			}
