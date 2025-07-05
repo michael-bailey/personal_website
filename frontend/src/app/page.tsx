@@ -1,17 +1,32 @@
 import SectionedContent from "@/components/server/SectionedContent";
 import Section from "@/components/server/Section";
 import ProjectSection from "@/components/server/ProjectSection";
-import WorkInProgressStuff from "@/components/client/WorkInProgressStuff";
 import {getImageUrl} from "@/lib/api/staticContent";
+import Image from "next/image";
+import {query} from "@/lib/graphql/serverClient";
+import { gql } from "@apollo/client";
 
-export default function Home() {
+
+const avatarUrlQuery = gql`
+    query GraphQLQuery {
+        getUserAvatar
+    }
+`
+
+export default async function Home() {
+
+	const avatarUrl = await query({ query: avatarUrlQuery })
+		.then(res => res.data.getUserAvatar as string)
+
 	return (
 		<div className="h-full grid pt-2">
 			<SectionedContent>
 				<Section>
+					<Image className="float-right mx-8 rounded-2xl shadow-lg max-w-44" src={avatarUrl} alt="profile image" width={512} height={512}  />
 					<div className="p-0">
 						<h1 className="text-6xl">Welcome</h1>
 						<hr className="py-2" />
+
 						<p className="text-justify">Hi there, I&#39;m Michael Bailey.
 							I&#39;m a software engineer with a deep interest in user-focused,
 							technology and engineering.
@@ -45,9 +60,11 @@ export default function Home() {
 					<ProjectSection
 						projectName="Gym Log Book"
 						githubUrl="https://github.com/michael-bailey/gym-log-book">
-						<img
-							className=" float-right mx-8 rounded-2xl shadow-lg max-w-44"
-							src={getImageUrl("gym_list.png")} />
+						<Image
+							className="float-right mx-8 rounded-2xl shadow-lg max-w-44"
+							src={getImageUrl("gym_list.png")} alt="Gym Log Book app screenshot"
+							width={512} height={512}
+						/>
 						<p>
 							Gym Log Book is a full native Android app I built to help log
 							my
@@ -80,9 +97,11 @@ export default function Home() {
 					<ProjectSection
 						projectName="Compass"
 						githubUrl={`https://github.com/michael-bailey/Compass}`}>
-						<img
+						<Image
 							className="block float-right mx-8 rounded-2xl shadow-lg max-w-44"
 							src={getImageUrl("Compass_Android.png")}
+							alt="compass app screenshot"
+							width={512} height={512}
 						/>
 						<p>Compass is a simple Android app that shows the user&#39;s
 							direction

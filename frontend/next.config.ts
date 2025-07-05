@@ -20,7 +20,10 @@ const nextConfig: NextConfig = {
 			destination: `${getApiBase()}/graphiql`,
 			permanent: true,
 		}
-	]
+	],
+	images: {
+		domains: ["avatars.githubusercontent.com","localhost", "michael-bailey.net", "new.michael-bailey.net"],
+	}
 };
 
 export default nextConfig;
