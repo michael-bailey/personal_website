@@ -7,6 +7,8 @@ plugins {
 	id("com.netflix.dgs.codegen") version "7.0.3"
 	id("com.apollographql.apollo") version "4.1.0"
 	id("jacoco")
+
+	id("environment.file")
 }
 
 group = "io.github.michael_bailey"
@@ -15,6 +17,12 @@ version = "0.0.1-SNAPSHOT"
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+kotlin {
+	compilerOptions {
+		freeCompilerArgs.addAll("-Xjsr305=strict")
 	}
 }
 
@@ -56,11 +64,7 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-kotlin {
-	compilerOptions {
-		freeCompilerArgs.addAll("-Xjsr305=strict")
-	}
-}
+
 
 tasks.generateJava {
 	schemaPaths.add("${projectDir}/src/main/resources/schema")
@@ -93,4 +97,8 @@ tasks.jacocoTestReport {
 		xml.required.set(true)
 		html.required.set(true)
 	}
+}
+
+envFile {
+	includeRootEnvFile = false
 }
