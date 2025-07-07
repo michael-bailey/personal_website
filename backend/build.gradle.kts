@@ -64,8 +64,6 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-
-
 tasks.generateJava {
 	schemaPaths.add("${projectDir}/src/main/resources/schema")
 	packageName = "io.github.michael_bailey.spring_blog.graphql"
