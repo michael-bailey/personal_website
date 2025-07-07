@@ -66,6 +66,7 @@ jobs:
           platforms: linux/arm64
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.PRIVATE_GITHUB_ACCESS_TOKEN }}
+          API_HOSTNAME: spring-blog-app
 
 # To be completed, when provisiond is ready
 #  deploy:
