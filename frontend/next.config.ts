@@ -1,8 +1,8 @@
-import type { NextConfig } from "next";
+import type {NextConfig} from "next";
 import {getApiBase} from "@/lib/environment";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+	/* config options here */
 	output: "standalone",
 	rewrites: async () => [
 		{
@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
 		}
 	],
 	images: {
-		domains: ["avatars.githubusercontent.com","localhost", "michael-bailey.net", "new.michael-bailey.net"],
+		domains: ["avatars.githubusercontent.com", "localhost", "michael-bailey.net", "new.michael-bailey.net"],
 	}
 };
 

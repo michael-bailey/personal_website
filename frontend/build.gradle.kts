@@ -1,20 +1,14 @@
 plugins {
-
+	id("environment.file")
+	id("javascript")
 }
 
-tasks.register<Exec>("installFrontend") {
-	workingDir = file(".")
-	commandLine("sh", "-c", "npm install")
+dependencies {
 }
 
-tasks.register<Exec>("runFrontendDevelopment") {
-	workingDir = file(".")
-	dependsOn(":frontend:installFrontend")
-	commandLine("sh", "-c", "npm run dev")
+javascript {
 }
 
-tasks.register<Exec>("buildFrontend") {
-	workingDir = file(".")
-	dependsOn(":frontend:installFrontend")
-	commandLine("sh", "-c", "npm run build")
+envFile {
+	includeRootEnvFile = false
 }

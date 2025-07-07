@@ -31,3 +31,4 @@ services:
       - spring-blog-app
     environment:
       HOST: 0.0.0.0
+      API_HOSTNAME: http://spring-blog-app
