@@ -14,8 +14,8 @@ export default function SelfHostingSection({
 
 	return (
 		<div
-			className="h-fit w-full inline-block mt-4 pt-4 border-t-1 border-t-gray-300">
-			<h3 className="text-2xl mb-4">{title}</h3>
+			className="h-fit w-full inline-block pt-4 border-t-1 border-t-gray-300">
+			<h3 className="text-2xl pb-4">{title}</h3>
 			{childrenArr.map((item, index) => {
 				return (<div key={index}>
 					{item}

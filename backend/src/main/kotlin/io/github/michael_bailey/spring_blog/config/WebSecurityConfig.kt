@@ -29,7 +29,8 @@ class WebSecurityConfig(
 	private val corsProperties: CorsProperties,
 ) {
 
-	private val logger: Logger = LoggerFactory.getLogger(WebSecurityConfig::class.java.getName())
+	private val logger: Logger =
+		LoggerFactory.getLogger(WebSecurityConfig::class.java.getName())
 
 	@Value("\${blog.username}")
 	private val username: String? = null
@@ -49,6 +50,9 @@ class WebSecurityConfig(
 				authorize("/css/**", permitAll)
 				authorize("/blog/**", permitAll)
 				authorize("/project/**", permitAll)
+				authorize("/login", permitAll)
+				authorize("/api/**", permitAll)
+				authorize("/graphql", permitAll)
 				authorize("/admin/**", hasRole("ADMIN"))
 				authorize(anyRequest, authenticated)
 			}
@@ -72,7 +76,10 @@ class WebSecurityConfig(
 	@Bean
 	fun corsConfigurationSource(): CorsConfigurationSource {
 		val configuration = CorsConfiguration()
-		configuration.allowedOrigins = corsProperties.allowedOrigins
+		configuration.allowedOrigins = listOf(
+			"https://michael-bailey.net",
+			"https://new.michael-bailey.net"
+		) + corsProperties.allowedOrigins
 		configuration.allowedMethods =
 			listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
 		configuration.allowedHeaders = listOf("*")

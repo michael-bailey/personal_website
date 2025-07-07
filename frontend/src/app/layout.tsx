@@ -5,6 +5,9 @@ import FooterBar from "@/components/server/FooterBar";
 import BlueprintEmptySpace from "@/components/server/BlueprintEmptySpace";
 import SectionSpacer from "@/components/server/SectionSpacer";
 import StoreProvider from "@/lib/contexts/StoreProvider";
+import StaticSideBar from "@/components/server/StaticSideBar";
+import React from "react";
+import {ApolloProvider} from "@/lib/contexts/ApolloProvider";
 
 export const metadata: Metadata = {
 	title: "Michael bailey - Blog",
@@ -16,28 +19,63 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+
+	const mobile_grid_columns = "grid-cols-[2em_auto_2em]"
+	const large_grid_columns = "lg:grid-cols-[10%_auto_10%]"
+	const max_grid_columns = "xl:grid-cols-[calc(20%_-_2em)_2em_auto_20%]"
+
+	const mobile_content_column = "col-start-2 xl:col-start-3"
+
+	const mobile_first_spacer = "col-start-1"
+	const large_first_spacer = "xl:col-start-2"
+
+	const mobile_second_spacer = "col-start-3"
+	const large_second_spacer = "xl:col-start-4"
+
+	const grids = [mobile_grid_columns, large_grid_columns, max_grid_columns].join(" ")
+	const first_spacer = [mobile_first_spacer, large_first_spacer].join(" ")
+	const second_spacer = [mobile_second_spacer, large_second_spacer].join(" ")
+
 	return (
 		<html lang="en" className="h-full bg-gray-100">
 		<body className="min-h-screen bg-blend-color-dodge">
 		<StoreProvider>
+			<ApolloProvider>
 
-			<div
-				className="grid min-h-screen grid-rows-[min-content_2em_auto_2em_min-content] grid-cols-[2em_auto_2em]  lg:grid-cols-[10%_auto_10%] xl:grid-cols-[20%_auto_20%] ">
+				<div
+					className={`grid min-h-screen grid-rows-[4rem_2em_auto_2em_min-content] ${grids}`}>
 
-				<HeaderBar className="row-start-1 col-start-2 bg-background" />
+					<h2
+						className="xl:col-start-1 row-start-1 text-center justify-self-center align-middle content-center text-2xl ">Michael
+						Bailey</h2>
 
-				<SectionSpacer className="h-8 col-start-2 row-start-2" />
+					<StaticSideBar
+						className={`hidden xl:block xl:col-start-1 row-start-3 row-span-full p-4 `} />
 
-				<main className="row-start-3 col-start-2 p-auto">
-					{children}
-				</main>
+					<SectionSpacer className={`h-8 row-start-2 col-start-1`} />
+					<SectionSpacer className={`h-8 row-start-4 col-start-1`} />
 
-				<FooterBar className="col-start-2 row-start-5" />
+					<BlueprintEmptySpace className={`${first_spacer} row-span-6`} />
 
-				<BlueprintEmptySpace className=" col-start-1 row-span-full" />
-				<BlueprintEmptySpace className=" col-start-3 row-span-full" />
+					<HeaderBar
+						className={`row-start-1 ${mobile_content_column} bg-background`} />
 
-			</div>
+					<SectionSpacer
+						className={`h-8 ${mobile_content_column} row-start-2`} />
+
+					<main
+						className={`row-start-3 ${mobile_content_column} min-h-[calc(100vh_-_4rem_-_2em_-_2em_-_4rem)] h-fit`}>
+						{children}
+					</main>
+
+					<SectionSpacer className={`${mobile_content_column} row-end-5`} />
+
+					<FooterBar className={`${mobile_content_column} row-start-6`} />
+
+					<BlueprintEmptySpace className={`${second_spacer} row-span-6`} />
+
+				</div>
+			</ApolloProvider>
 		</StoreProvider>
 
 		</body>
