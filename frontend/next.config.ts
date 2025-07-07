@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
 		}
 	],
 	images: {
-		domains: ["avatars.githubusercontent.com", "localhost", "michael-bailey.net", "new.michael-bailey.net"],
+		domains: ["spring-blog-app", "avatars.githubusercontent.com", "localhost", "michael-bailey.net", "new.michael-bailey.net"],
 	}
 };
 
