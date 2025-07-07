@@ -22,7 +22,6 @@ abstract class LoadEnvironmentFileTask : DefaultTask() {
 	fun action() {
 		if (includeRoot) loadEnvironmentFromFile(path = "${projectRootDir}/.env")
 		loadEnvironmentFromFile(path = "${projectDir}/.env")
-		this.extensions.add("environment", envMap)
 	}
 
 	private fun loadEnvironmentFromFile(path: String) {

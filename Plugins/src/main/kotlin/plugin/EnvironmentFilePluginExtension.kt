@@ -1,6 +1,6 @@
 package plugin
 
-class EnvironmentFilePluginExtension {
+open class EnvironmentFilePluginExtension {
 
 	var includeRootEnvFile: Boolean = false
 
