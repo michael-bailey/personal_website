@@ -1,7 +1,9 @@
 
 plugins {
-	kotlin("jvm") version "1.9.25"
-	kotlin("plugin.spring") version "1.9.25"
+	kotlin("jvm") version "2.2.0"
+	kotlin("plugin.serialization") version "2.2.0"
+	kotlin("plugin.spring") version "2.2.0"
+
 	id("org.springframework.boot") version "3.4.5"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("com.netflix.dgs.codegen") version "7.0.3"
@@ -40,6 +42,13 @@ dependencies {
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2")
+
+	implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.0")
+
+
 
 	implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.0.0"))
 	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
