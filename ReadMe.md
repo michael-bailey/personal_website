@@ -42,3 +42,29 @@ To run the server locally:
     - POSTGRES_URL: The url to the postgress db (not sure if this is used?)
 
 To build the server: `./gradlew :backend:build`
+
+#### Architecture
+
+```mermaid
+block-beta
+    columns 3
+        
+        Controller  space   space
+        space       space   space
+        Service     space   space
+        space       space   space
+        space       Fetcher* Mutator*
+        space       space   space
+        Repository  space   space
+        space       space   space
+        Database    space   space
+        
+        Controller ---> Service
+        Service ---> Repository
+        Service ---> Fetcher*
+        Service ---> Mutator*
+        Fetcher* ---> Repository
+        Mutator* ---> Repository
+        Repository ---> Database
+```
+*Rough latering of components*
