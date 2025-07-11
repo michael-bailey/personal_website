@@ -45,6 +45,29 @@ To build the server: `./gradlew :backend:build`
 
 #### Architecture
 
+overview
+```mermaid
+
+architecture-beta
+  group api(server)[Container]
+  
+  service int(internet)[Internet]
+  
+  service db(database)[Database] in api
+  service fr(server)[Frontend] in api
+  service be(server)[Backend] in api
+  
+  be:T -- B:fr
+  
+  be:R -- L:db
+  
+  int:R -- L:fr
+  int:R -- L:be
+
+```
+
+Server layer architecture
+
 ```mermaid
 block-beta
     columns 3
