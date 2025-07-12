@@ -1,12 +1,13 @@
 package io.github.michael_bailey.spring_blog.service
 
-import io.github.michael_bailey.spring_blog.model.AddressAnalyticsModel
+import io.github.michael_bailey.spring_blog.model.DomainNameAnalyticsModel
 import io.github.michael_bailey.spring_blog.model.RequestAnalyticsModel
-import io.github.michael_bailey.spring_blog.repository.AddressAnalyticsRepository
+import io.github.michael_bailey.spring_blog.repository.DomainNameAnalyticsRepository
 import io.github.michael_bailey.spring_blog.repository.RequestAnalyticsRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.net.InetAddress
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.time.toJavaInstant
@@ -15,7 +16,7 @@ import kotlin.time.toJavaInstant
 @Service
 class AnalyticsService(
 	private val clock: Clock,
-	private val addressAnalyticsRepository: AddressAnalyticsRepository,
+	private val domainNameAnalyticsRepository: DomainNameAnalyticsRepository,
 	private val requestAnalyticsRepository: RequestAnalyticsRepository
 ) {
 
@@ -24,16 +25,23 @@ class AnalyticsService(
 	fun logRequestAddress(remoteAddr: String) {
 		val requestInstant = clock.now()
 
-		logger.info("Logging request from $remoteAddr at $requestInstant")
+		logger.info("Fetching domain name")
 
-		addressAnalyticsRepository.save(
-			AddressAnalyticsModel(
-				address = remoteAddr,
+		val domainName = getDomainNameFromAddress(remoteAddr)
+
+		if (domainName == null) {
+			logger.info("No domain name found")
+			return
+		}
+
+		domainNameAnalyticsRepository.save(
+			DomainNameAnalyticsModel(
+				domainName = domainName,
 				instant = requestInstant.toJavaInstant()
 			)
 		)
 
-		logger.info("Logged request address")
+		logger.info("Logged domain address")
 
 	}
 
@@ -50,5 +58,10 @@ class AnalyticsService(
 
 		logger.info("Logged request")
 
+	}
+
+	private fun getDomainNameFromAddress(remoteAddr: String): String? {
+		val domainName =  InetAddress.getByName(remoteAddr).hostName
+		return if (domainName != remoteAddr) { domainName } else { null }
 	}
 }

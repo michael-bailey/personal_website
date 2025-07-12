@@ -6,9 +6,9 @@ import java.time.Instant
 import java.util.*
 
 @Entity
-data class AddressAnalyticsModel(
+data class DomainNameAnalyticsModel(
 	@Id val id: UUID = UUID.randomUUID(),
 
-	val address: String = "0.0.0.0",
+	val domainName: String? = null,
 	val instant: Instant = Instant.EPOCH
 )
