@@ -1,26 +1,24 @@
 package io.github.michael_bailey.spring_blog.filter
 
 import io.github.michael_bailey.spring_blog.http.CustomHttpRequest
-import jakarta.servlet.Filter
 import jakarta.servlet.FilterChain
-import jakarta.servlet.ServletRequest
-import jakarta.servlet.ServletResponse
 import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
+import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 @Order(0)
-class RequestFilter: Filter {
+class RequestFilter: OncePerRequestFilter() {
 
-
-	override fun doFilter(
-		request: ServletRequest?,
-		response: ServletResponse?,
-		chain: FilterChain?,
+	override fun doFilterInternal(
+		request: HttpServletRequest,
+		response: HttpServletResponse,
+		filterChain: FilterChain
 	) {
-		val customRequest = CustomHttpRequest(request as HttpServletRequest)
-		chain!!.doFilter(customRequest, response)
+		val customRequest = CustomHttpRequest(request)
+		filterChain.doFilter(customRequest, response)
 	}
 
 
