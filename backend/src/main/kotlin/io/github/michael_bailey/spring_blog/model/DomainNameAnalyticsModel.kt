@@ -9,6 +9,7 @@ import java.util.*
 data class DomainNameAnalyticsModel(
 	@Id val id: UUID = UUID.randomUUID(),
 
+	val requestId: String,
 	val domainName: String? = null,
-	val instant: Instant = Instant.EPOCH
+	val instant: Instant = Instant.EPOCH,
 )

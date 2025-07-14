@@ -47,8 +47,7 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2")
 
 	implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.0")
-
-
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
 
 	implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.0.0"))
 	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
@@ -58,6 +57,7 @@ dependencies {
 	implementation("org.commonmark:commonmark:0.21.0")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 
 	runtimeOnly("org.postgresql:postgresql")

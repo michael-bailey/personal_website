@@ -22,27 +22,29 @@ class AnalyticsService(
 
 	val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
-	fun logRequestAddress(remoteAddr: String) {
+	fun logRequestDomain(requestId: String, remoteAddr: String): DomainNameAnalyticsModel? {
+
 		val requestInstant = clock.now()
 
-		logger.info("Fetching domain name")
+		logger.info("Attempting to fetching domain name")
 
 		val domainName = getDomainNameFromAddress(remoteAddr)
 
 		if (domainName == null) {
 			logger.info("No domain name found")
-			return
+			return null
 		}
 
-		domainNameAnalyticsRepository.save(
+		logger.info("saving domain name")
+		val data = domainNameAnalyticsRepository.save(
 			DomainNameAnalyticsModel(
+				requestId = requestId,
 				domainName = domainName,
 				instant = requestInstant.toJavaInstant()
 			)
 		)
 
-		logger.info("Logged domain address")
-
+		return data
 	}
 
 	fun logRequest(requestId: String, method: String, requestURI: String) {
