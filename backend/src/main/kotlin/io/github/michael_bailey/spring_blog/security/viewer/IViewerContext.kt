@@ -1,6 +1,6 @@
 package io.github.michael_bailey.spring_blog.security.viewer
 
-import io.github.michael_bailey.spring_blog.privacy.PrivacyPreferences
+import io.github.michael_bailey.spring_blog.privacy.IPrivacyPreferences
 import io.github.michael_bailey.spring_blog.security.principal.IPrincipal
 import java.util.*
 import kotlin.time.ExperimentalTime
@@ -12,5 +12,5 @@ interface IViewerContext {
 	val locale: Locale
 	val requestId: String
 	val requestTime: Instant
-	val privacyPreferences: PrivacyPreferences
+	val privacyPreferences: IPrivacyPreferences
 }

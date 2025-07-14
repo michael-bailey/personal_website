@@ -1,7 +1,7 @@
 package io.github.michael_bailey.spring_blog.filter
 
 import io.github.michael_bailey.spring_blog.http.CustomHttpRequest
-import io.github.michael_bailey.spring_blog.security.PrivacyPreferencesCookie
+import io.github.michael_bailey.spring_blog.privacy.PrivacyPreferencesCookie
 import io.github.michael_bailey.spring_blog.security.viewer.ViewerContextFactory
 import io.github.michael_bailey.spring_blog.security.viewer.ViewerContextHolder
 import jakarta.servlet.FilterChain
