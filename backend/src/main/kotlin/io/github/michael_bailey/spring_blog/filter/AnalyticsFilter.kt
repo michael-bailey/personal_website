@@ -1,6 +1,6 @@
 package io.github.michael_bailey.spring_blog.filter
 
-import io.github.michael_bailey.spring_blog.security.viewer.ViewerContextHolder
+import io.github.michael_bailey.spring_blog.security.viewer.IViewerContext
 import io.github.michael_bailey.spring_blog.service.AnalyticsService
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
-@Order(3)
+@Order(4)
 class AnalyticsFilter(
 	private val analyticsService: AnalyticsService,
 	private val applicationContext: ApplicationContext
@@ -27,7 +27,7 @@ class AnalyticsFilter(
 		filterChain: FilterChain
 	) {
 
-		val vc = applicationContext.getBean(ViewerContextHolder::class.java).context
+		val vc = applicationContext.getBean(IViewerContext::class.java)
 
 		logger.info("Logging request for ${request.method} ${request.requestURI} for user ${vc.viewer.username}")
 

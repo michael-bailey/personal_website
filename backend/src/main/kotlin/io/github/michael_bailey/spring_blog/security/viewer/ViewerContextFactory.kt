@@ -21,21 +21,17 @@ class ViewerContextFactory {
 		request: HttpServletRequest,
 		clock: Clock,
 		applicationContext: ApplicationContext
+
 	): IViewerContext {
 		request as CustomHttpRequest
+		val privacyPreferences = getPrivacyCookie(request)
+
 		val principal = authentication?.principal
 
 		val viewer = when (principal) {
 			is IPrincipal -> principal
 			else -> AnonymousPrincipal
 		}
-
-		val privacyCookie = request.cookies.find { it.name == "privacy_preferences" }
-
-		val privacyPreferences = privacyCookie?.value?.let {
-			// add json serialisation
-			PrivacyPreferences()
-		} ?: PrivacyPreferences()
 
 		return ViewerContext(
 			applicationContext = applicationContext,
