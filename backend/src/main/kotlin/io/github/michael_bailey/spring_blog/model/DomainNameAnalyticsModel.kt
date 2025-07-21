@@ -1,5 +1,9 @@
 package io.github.michael_bailey.spring_blog.model
 
+import io.github.michael_bailey.spring_blog.extension.nullUUID
+import io.github.michael_bailey.spring_blog.model.converter.StringToUUIDConverter
+import io.github.michael_bailey.spring_blog.model.interfaces.IRequestOwnedModel
+import jakarta.persistence.Convert
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import java.time.Instant
@@ -9,7 +13,8 @@ import java.util.*
 data class DomainNameAnalyticsModel(
 	@Id val id: UUID = UUID.randomUUID(),
 
-	val requestId: String,
+	@Convert(StringToUUIDConverter::class)
+	override val requestId: UUID = nullUUID(),
 	val domainName: String? = null,
 	val instant: Instant = Instant.EPOCH,
-)
+): IRequestOwnedModel
