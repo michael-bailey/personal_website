@@ -11,6 +11,6 @@ class CustomHttpRequest(
 		const val REQUEST_ID = "requestId"
 	}
 
-	override fun getRequestId(): String = (request).getAttribute(REQUEST_ID) as String
+	override fun getRequestId(): String? = request.getAttribute(REQUEST_ID) as String
 
 }
