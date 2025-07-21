@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationContext
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
+import java.util.*
 
 @Component
 @Order(4)
@@ -44,7 +45,7 @@ class AnalyticsFilter(
 		if (vc.privacyPreferences.allowedRequestLogging) {
 			logger.info("Logging request data")
 			analyticsService.logRequest(
-				request.requestId,
+				UUID.fromString(request.requestId),
 				request.method,
 				request.requestURI
 			)

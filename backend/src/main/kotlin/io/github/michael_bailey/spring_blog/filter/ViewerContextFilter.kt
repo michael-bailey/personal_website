@@ -38,7 +38,7 @@ class ViewerContextFilter(
 
 		request as CustomHttpRequest
 
-		var cookie = request.cookies.find { it.name == COOKIE_NAME }?.let {
+		var cookie = request.cookies?.find { it.name == COOKIE_NAME }?.let {
 			Json.decodeFromString<PrivacyPreferencesCookie>(it.value)
 		}
 
@@ -51,6 +51,7 @@ class ViewerContextFilter(
 				)
 			)
 		}
+
 
 		val authentication = SecurityContextHolder.getContext().authentication
 
