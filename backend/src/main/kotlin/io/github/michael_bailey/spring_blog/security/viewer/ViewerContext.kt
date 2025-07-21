@@ -9,12 +9,11 @@ import kotlin.time.Instant
 
 @OptIn(ExperimentalTime::class)
 data class ViewerContext(
-	private val applicationContext: ApplicationContext,
-
+	override val applicationContext: ApplicationContext,
 
 	override val viewer: IPrincipal,
 	override val locale: Locale,
-	override val requestId: String,
+	override val requestId: UUID,
 	override val requestTime: Instant,
 	override val privacyPreferences: IPrivacyPreferences
 ): IViewerContext

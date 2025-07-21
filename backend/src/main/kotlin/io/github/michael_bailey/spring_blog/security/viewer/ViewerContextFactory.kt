@@ -10,6 +10,7 @@ import kotlinx.serialization.json.Json
 import org.springframework.context.ApplicationContext
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
+import java.util.*
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
@@ -39,7 +40,7 @@ class ViewerContextFactory {
 
 			viewer = viewer,
 			locale = request.locale,
-			requestId = request.requestId,
+			requestId = UUID.fromString(request.requestId),
 			requestTime = clock.now(),
 			privacyPreferences = privacyPreferences
 		)
@@ -50,7 +51,7 @@ class ViewerContextFactory {
 	): IPrivacyPreferences {
 
 		val privacyCookie =
-			request.cookies.find { it.name == "privacy_preferences" }
+			request.cookies?.find { it.name == "privacy_preferences" }
 
 		val privacyPreferences = privacyCookie?.value?.let {
 			// add json serialisation
