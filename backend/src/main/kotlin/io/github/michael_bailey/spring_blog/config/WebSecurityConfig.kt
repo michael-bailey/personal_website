@@ -31,6 +31,9 @@ class WebSecurityConfig(
 	private val corsProperties: CorsProperties,
 ) {
 
+	val ANON_AUTHORITY = "NONE"
+	val ADMIN_AUTHORITY = "ADMIN"
+
 	private val logger: Logger =
 		LoggerFactory.getLogger(WebSecurityConfig::class.java.getName())
 
@@ -46,8 +49,8 @@ class WebSecurityConfig(
 		logger.info("got allowed origins for CORS: ${corsProperties.allowedOrigins}")
 		http {
 			authorizeHttpRequests {
-				authorize("/admin/**", hasAuthority("ADMIN"))
-				authorize(anyRequest, permitAll)
+				authorize("/admin/**", hasAuthority(ADMIN_AUTHORITY))
+				authorize(anyRequest, hasAuthority(ANON_AUTHORITY))
 			}
 			formLogin {
 				loginPage = "/login"
@@ -66,7 +69,7 @@ class WebSecurityConfig(
 			}
 			anonymous {
 				principal = AnonymousPrincipal
-				authorities = listOf(SimpleGrantedAuthority("NONE"))
+				authorities = listOf(SimpleGrantedAuthority(ANON_AUTHORITY))
 			}
 		}
 

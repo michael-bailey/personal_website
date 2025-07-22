@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.slf4j.LoggerFactory
 import org.springframework.context.ApplicationContext
 import org.springframework.core.annotation.Order
 import org.springframework.security.core.context.SecurityContextHolder
@@ -30,6 +31,8 @@ class ViewerContextFilter(
 
 	private val COOKIE_NAME = "privacy_preferences"
 
+	private val logger = LoggerFactory.getLogger(ViewerContextFilter::class.java)
+
 	override fun doFilterInternal(
 		request: HttpServletRequest,
 		response: HttpServletResponse,
@@ -38,11 +41,15 @@ class ViewerContextFilter(
 
 		request as CustomHttpRequest
 
+		logger.info("ViewerContextFilter started for URI: ${request.requestURI}")
+
 		var cookie = request.cookies?.find { it.name == COOKIE_NAME }?.let {
+			logger.info("Found existing privacy_preferences cookie: $it")
 			Json.decodeFromString<PrivacyPreferencesCookie>(it.value)
 		}
 
 		if (cookie == null) {
+			logger.info("No privacy_preferences cookie found. Creating default.")
 			cookie = PrivacyPreferencesCookie.createNoAnalytics()
 			response.addCookie(
 				Cookie(
@@ -51,7 +58,6 @@ class ViewerContextFilter(
 				)
 			)
 		}
-
 
 		val authentication = SecurityContextHolder.getContext().authentication
 
@@ -63,6 +69,9 @@ class ViewerContextFilter(
 		)
 		viewerContextHolder.context = viewerContext
 
+		logger.info("Viewer context created and set: $viewerContext")
+
 		filterChain.doFilter(request, response)
 	}
+
 }

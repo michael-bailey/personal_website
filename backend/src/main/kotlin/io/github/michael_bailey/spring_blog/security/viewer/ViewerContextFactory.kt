@@ -23,7 +23,6 @@ class ViewerContextFactory {
 		request: HttpServletRequest,
 		clock: Clock,
 		applicationContext: ApplicationContext
-
 	): IViewerContext {
 		request as CustomHttpRequest
 		val privacyPreferences = getPrivacyCookie(request)
