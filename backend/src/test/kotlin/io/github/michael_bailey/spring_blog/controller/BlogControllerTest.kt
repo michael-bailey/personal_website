@@ -1,24 +1,37 @@
 package io.github.michael_bailey.spring_blog.controller
 
 import io.github.michael_bailey.spring_blog.config.WebSecurityConfig
+import io.github.michael_bailey.spring_blog.filter.AnalyticsFilter
+import io.github.michael_bailey.spring_blog.filter.ViewerContextFilter
 import io.github.michael_bailey.spring_blog.model.BlogPostModel
 import io.github.michael_bailey.spring_blog.service.BlogService
 import io.github.michael_bailey.spring_blog.service.MarkdownService
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.FilterType
 import org.springframework.context.annotation.Import
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 
-@AutoConfigureMockMvc(addFilters = true)
-@ActiveProfiles("test")
+@WebMvcTest(
+	controllers = [BlogController::class],
+	excludeFilters = [
+		ComponentScan.Filter(
+			type = FilterType.ASSIGNABLE_TYPE,
+			classes = [
+				ViewerContextFilter::class,
+				AnalyticsFilter::class,
+			],
+		)
+	]
+)
 @Import(WebSecurityConfig::class)
-@WebMvcTest(BlogController::class)
+@ActiveProfiles("test")
 class BlogControllerTest {
 
 	@Autowired
