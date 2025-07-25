@@ -1,14 +1,13 @@
 package io.github.michael_bailey.spring_blog.filter
 
+import io.github.michael_bailey.spring_blog.cookie.PreferenceCookieFactory
 import io.github.michael_bailey.spring_blog.http.CustomHttpRequest
 import io.github.michael_bailey.spring_blog.privacy.PrivacyPreferencesCookie
 import io.github.michael_bailey.spring_blog.security.viewer.ViewerContextFactory
 import io.github.michael_bailey.spring_blog.security.viewer.ViewerContextHolder
 import jakarta.servlet.FilterChain
-import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import org.springframework.context.ApplicationContext
@@ -27,9 +26,8 @@ class ViewerContextFilter(
 	private val viewerContextHolder: ViewerContextHolder,
 	private val clock: Clock,
 	private val applicationContext: ApplicationContext,
+	private val preferenceCookieFactory: PreferenceCookieFactory,
 ) : OncePerRequestFilter() {
-
-	private val COOKIE_NAME = "privacy_preferences"
 
 	private val logger = LoggerFactory.getLogger(ViewerContextFilter::class.java)
 
@@ -43,21 +41,16 @@ class ViewerContextFilter(
 
 		logger.info("ViewerContextFilter started for URI: ${request.requestURI}")
 
-		var cookie = request.cookies?.find { it.name == COOKIE_NAME }?.let {
-			logger.info("Found existing privacy_preferences cookie: $it")
-			Json.decodeFromString<PrivacyPreferencesCookie>(it.value)
-		}
+		// Yes, this is encoding to decode, but it's more readable
+		val cookieString =
+			request.cookies?.find { it.name == PreferenceCookieFactory.PRIVACY_COOKIE_NAME }?.value
+				?: PrivacyPreferencesCookie().encode()
 
-		if (cookie == null) {
-			logger.info("No privacy_preferences cookie found. Creating default.")
-			cookie = PrivacyPreferencesCookie.createNoAnalytics()
-			response.addCookie(
-				Cookie(
-					COOKIE_NAME,
-					Json.encodeToString<PrivacyPreferencesCookie>(cookie)
+		val cookieData =
+			runCatching { PrivacyPreferencesCookie.decode(cookieString) }.getOrNull()
+				?: Json.decodeFromString<PrivacyPreferencesCookie>(
+					cookieString
 				)
-			)
-		}
 
 		val authentication = SecurityContextHolder.getContext().authentication
 
@@ -65,8 +58,10 @@ class ViewerContextFilter(
 			authentication,
 			request,
 			clock,
-			applicationContext
+			applicationContext,
+			privacyPreferences = cookieData
 		)
+
 		viewerContextHolder.context = viewerContext
 
 		logger.info("Viewer context created and set: $viewerContext")

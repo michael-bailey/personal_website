@@ -6,7 +6,6 @@ import io.github.michael_bailey.spring_blog.privacy.PrivacyPreferencesCookie
 import io.github.michael_bailey.spring_blog.security.principal.AnonymousPrincipal
 import io.github.michael_bailey.spring_blog.security.principal.IPrincipal
 import jakarta.servlet.http.HttpServletRequest
-import kotlinx.serialization.json.Json
 import org.springframework.context.ApplicationContext
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
@@ -22,10 +21,11 @@ class ViewerContextFactory {
 		authentication: Authentication?,
 		request: HttpServletRequest,
 		clock: Clock,
-		applicationContext: ApplicationContext
+		applicationContext: ApplicationContext,
+		privacyPreferences: IPrivacyPreferences
 	): IViewerContext {
 		request as CustomHttpRequest
-		val privacyPreferences = getPrivacyCookie(request)
+
 
 		val principal = authentication?.principal
 
@@ -52,10 +52,7 @@ class ViewerContextFactory {
 		val privacyCookie =
 			request.cookies?.find { it.name == "privacy_preferences" }
 
-		val privacyPreferences = privacyCookie?.value?.let {
-			// add json serialisation
-			Json.decodeFromString<PrivacyPreferencesCookie>(it)
-		} ?: PrivacyPreferencesCookie()
+		val privacyPreferences = privacyCookie?.value?.let { PrivacyPreferencesCookie.decode(it) } ?: PrivacyPreferencesCookie()
 
 		return privacyPreferences
 	}
