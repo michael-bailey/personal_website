@@ -22,11 +22,6 @@ export default async function Page(): Promise<ReactElement> {
 	return (
 		<SectionedContent>
 			<Section>
-				<div>
-					WIP - page about British-Information-Technologies.
-				</div>
-			</Section>
-			<Section>
 				Api request:
 				<TestButton />
 			</Section>
