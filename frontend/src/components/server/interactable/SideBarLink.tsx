@@ -16,7 +16,7 @@ export default function SideBarLink({
 
 	const path = usePathname()
 
-	const selectedClasses = path === href ? "light:bg-gray-200 dark:bg-gray-800" : "bg-white dark:bg-black"
+	const selectedClasses = path === href ? "light:bg-gray-200 dark:bg-gray-800" : "bg-none"
 
 	return <Link prefetch={false}
 		className={` ${selectedClasses} p-2 block w-full`}
