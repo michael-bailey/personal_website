@@ -1,8 +1,23 @@
 'use client'
 
 import {ReactElement, useCallback, useEffect, useMemo, useState} from "react";
+import {gql, useLazyQuery} from "@apollo/client";
+import {PrivacyPreferencesQuery} from "@/__generated__/graphql";
+
+const privacyPreferencesQuery = gql`
+    query PrivacyPreferences {
+        viewer {
+            privacyPreferences {
+                allowedDomainLogging
+                allowedRequestLogging
+            }
+        }
+    }
+`
 
 export default function PrivacyCookieToggles(): ReactElement {
+
+	const [launchQuery, { called, loading, data: queryData }] = useLazyQuery<PrivacyPreferencesQuery>(privacyPreferencesQuery)
 
 	const [analytics, setAnalytics] = useState({
 		domain: null,
@@ -20,26 +35,35 @@ export default function PrivacyCookieToggles(): ReactElement {
 
 	}, [setAnalytics])
 
-	const domainEnabled = useMemo(() => analytics.domain !== "null", [analytics.domain])
+
 	const requestEnabled = useMemo(() => analytics.request !== "null", [analytics.request])
 
 	const toggleDomain = useCallback(async () => {
-		const url = `/api/analytics/preferences?allowDomainLogging=${!domainEnabled}`
+		const url = `/api/analytics/preferences?allowDomainLogging=${!queryData?.viewer?.privacyPreferences?.allowedDomainLogging}`
 		const res = await fetch(url, {method: "POST"})
 		const data = await res.json()
-		if (data == true) await fetchCookies()
-	}, [domainEnabled, fetchCookies])
+		if (data == true) {
+			await fetchCookies()
+			await launchQuery()
+		}
+
+	}, [queryData?.viewer?.privacyPreferences?.allowedDomainLogging, fetchCookies, launchQuery])
 
 	const toggleRequest = useCallback(async () => {
 		const url = `/api/analytics/preferences?allowRequestLogging=${!requestEnabled}`
 		const res = await fetch(url, {method: "POST"})
 		const data = await res.json()
-		if (data == true) await fetchCookies()
-	}, [fetchCookies, requestEnabled])
+		if (data == true) {
+			await fetchCookies()
+			await launchQuery()
+		}
+
+	}, [fetchCookies, launchQuery, requestEnabled])
 
 	useEffect(() => {
+		launchQuery()
 		fetchCookies()
-	}, [fetchCookies])
+	}, [fetchCookies, launchQuery])
 
 	return <>
 		<h2 className="text-xl">Domain Logging</h2>

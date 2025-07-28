@@ -1,6 +1,7 @@
 type Query {
     getBlogPosts: [BlogPost!]!
     getUserAvatar: String!
+    viewer: ViewerContext
 }
 
 type Mutation {
@@ -28,4 +29,14 @@ type BlogPost implements Node {
 
 interface UserInfo {
     profilePictureURL: String!
+}
+
+type ViewerContext {
+    locale: String
+    privacyPreferences: PrivacyPreferences
+}
+
+type PrivacyPreferences {
+    allowedDomainLogging: Boolean
+    allowedRequestLogging: Boolean
 }
