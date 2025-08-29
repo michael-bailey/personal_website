@@ -1,15 +1,24 @@
 type Query {
     getBlogPosts: [BlogPost!]!
-    getUserAvatar: String!
     viewer: ViewerContext
 }
 
 type Mutation {
+
+    selectCookiePreferences(
+        result: SelectCookieResult!
+    ): PrivacyPreferences
+
     createBlogPost(
         name: String!,
         title: String!,
         content: String!,
     ): BlogPost!
+}
+
+enum SelectCookieResult {
+    Accept
+    Deny
 }
 
 interface Node {
@@ -32,11 +41,14 @@ interface UserInfo {
 }
 
 type ViewerContext {
+    id: ID
     locale: String
     privacyPreferences: PrivacyPreferences
 }
 
 type PrivacyPreferences {
+    id: ID
+    cookiePromptDismissed: Boolean
     allowedDomainLogging: Boolean
     allowedRequestLogging: Boolean
 }

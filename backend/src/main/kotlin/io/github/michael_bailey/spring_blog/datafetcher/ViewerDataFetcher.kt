@@ -8,6 +8,8 @@ import io.github.michael_bailey.spring_blog.privacy.PrivacyPreferencesCookie
 import io.github.michael_bailey.spring_blog.security.viewer.ViewerContext
 import io.github.michael_bailey.spring_blog.security.viewer.ViewerContextHolder
 
+private const val CURRENT_VIEWER_GQL_ID = "current_viewer"
+
 @DgsComponent
 class ViewerDataFetcher(
 	private val viewerContextHolder: ViewerContextHolder
@@ -18,19 +20,21 @@ class ViewerDataFetcher(
 		return viewerContextHolder.context as ViewerContext
 	}
 
-
-
 	@DgsData(parentType = "ViewerContext")
 	fun locale(dfe: DgsDataFetchingEnvironment): String {
 		val parent = dfe.getSource<ViewerContext>()
 		return parent.locale.toString()
 	}
 
-
 	@DgsData(parentType = "ViewerContext")
 	fun privacyPreferences(dfe: DgsDataFetchingEnvironment): PrivacyPreferencesCookie {
 		val parent = dfe.getSource<ViewerContext>()
 		return parent.privacyPreferences as PrivacyPreferencesCookie
+	}
+
+	@DgsData(parentType = "ViewerContext")
+	fun id(dfe: DgsDataFetchingEnvironment): String {
+		return CURRENT_VIEWER_GQL_ID
 	}
 
 }
