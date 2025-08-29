@@ -1,6 +1,6 @@
 'use client'
 
-import {ReactElement, useCallback, useEffect, useMemo, useState} from "react";
+import {ReactElement, useCallback, useEffect, useState} from "react";
 import {gql, useLazyQuery} from "@apollo/client";
 import {PrivacyPreferencesQuery} from "@/__generated__/graphql";
 
@@ -17,7 +17,7 @@ const privacyPreferencesQuery = gql`
 
 export default function PrivacyCookieToggles(): ReactElement {
 
-	const [launchQuery, { called, loading, data: queryData }] = useLazyQuery<PrivacyPreferencesQuery>(privacyPreferencesQuery)
+	const [launchQuery, { data: queryData }] = useLazyQuery<PrivacyPreferencesQuery>(privacyPreferencesQuery)
 
 	const [analytics, setAnalytics] = useState({
 		domain: null,
@@ -25,7 +25,7 @@ export default function PrivacyCookieToggles(): ReactElement {
 	})
 
 	const fetchCookies = useCallback(async () => {
-		const res = await fetch(`/api/analytics`)
+		const res = await fetch('/api/analytics')
 			.then(res => res.json())
 
 		setAnalytics({
@@ -34,9 +34,6 @@ export default function PrivacyCookieToggles(): ReactElement {
 		})
 
 	}, [setAnalytics])
-
-
-	const requestEnabled = useMemo(() => analytics.request !== "null", [analytics.request])
 
 	const toggleDomain = useCallback(async () => {
 		const url = `/api/analytics/preferences?allowDomainLogging=${!queryData?.viewer?.privacyPreferences?.allowedDomainLogging}`
@@ -50,7 +47,7 @@ export default function PrivacyCookieToggles(): ReactElement {
 	}, [queryData?.viewer?.privacyPreferences?.allowedDomainLogging, fetchCookies, launchQuery])
 
 	const toggleRequest = useCallback(async () => {
-		const url = `/api/analytics/preferences?allowRequestLogging=${!requestEnabled}`
+		const url = `/api/analytics/preferences?allowRequestLogging=${!queryData?.viewer?.privacyPreferences?.allowedRequestLogging}`
 		const res = await fetch(url, {method: "POST"})
 		const data = await res.json()
 		if (data == true) {
@@ -58,11 +55,13 @@ export default function PrivacyCookieToggles(): ReactElement {
 			await launchQuery()
 		}
 
-	}, [fetchCookies, launchQuery, requestEnabled])
+	}, [fetchCookies, launchQuery, queryData?.viewer?.privacyPreferences?.allowedRequestLogging])
 
 	useEffect(() => {
-		launchQuery()
-		fetchCookies()
+		Promise.all([
+			// launchQuery(),
+			// fetchCookies()
+		]).then()
 	}, [fetchCookies, launchQuery])
 
 	return <>

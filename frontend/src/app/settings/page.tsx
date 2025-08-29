@@ -6,7 +6,6 @@ import PrivacyCookieToggles from "@/app/settings/PrivacyCookieToggles";
 
 export default async function SettingsPage() {
 
-	
 	return <SectionedContent>
 		<Section>
 			<h1 className="text-4xl">Settings</h1>
@@ -17,7 +16,7 @@ export default async function SettingsPage() {
 			<h1 className="text-2xl">Privacy</h1>
 			<p>Here are settings to adjust your analytics sharing preferences.</p>
 			<p>I would appreciate you have these on, but fully understand why you
-				wouldn&#39;t want to.</p>
+				wouldn't want to.</p>
 			<br />
 
 			<PrivacyCookieToggles />

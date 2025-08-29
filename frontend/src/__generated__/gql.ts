@@ -14,12 +14,14 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n    query GraphQLQuery {\n        getUserAvatar\n    }\n": typeof types.GraphQlQueryDocument,
-    "\n\tquery PrivacyPreferences {\n\t\t\tviewer {\n\t\t\t\t\tprivacyPreferences {\n              allowedDomainLogging\n              allowedRequestLogging\n\t\t\t\t\t}\n\t\t\t}\n\t}\n": typeof types.PrivacyPreferencesDocument,
+    "\n    query PrivacyPreferences {\n        viewer {\n            privacyPreferences {\n                allowedDomainLogging\n                allowedRequestLogging\n            }\n        }\n    }\n": typeof types.PrivacyPreferencesDocument,
+    "\n    query CookieShown {\n        viewer {\n            id\n            privacyPreferences {\n                id\n                cookiePromptDismissed\n                allowedDomainLogging\n                allowedRequestLogging\n            }\n        }\n    }\n": typeof types.CookieShownDocument,
+    "\n    mutation DisableCookiePopup($cookiesEnabled: SelectCookieResult!) {\n        selectCookiePreferences(result: $cookiesEnabled) {\n            id\n            cookiePromptDismissed\n            allowedDomainLogging\n            allowedRequestLogging\n        }\n    }\n": typeof types.DisableCookiePopupDocument,
 };
 const documents: Documents = {
-    "\n    query GraphQLQuery {\n        getUserAvatar\n    }\n": types.GraphQlQueryDocument,
-    "\n\tquery PrivacyPreferences {\n\t\t\tviewer {\n\t\t\t\t\tprivacyPreferences {\n              allowedDomainLogging\n              allowedRequestLogging\n\t\t\t\t\t}\n\t\t\t}\n\t}\n": types.PrivacyPreferencesDocument,
+    "\n    query PrivacyPreferences {\n        viewer {\n            privacyPreferences {\n                allowedDomainLogging\n                allowedRequestLogging\n            }\n        }\n    }\n": types.PrivacyPreferencesDocument,
+    "\n    query CookieShown {\n        viewer {\n            id\n            privacyPreferences {\n                id\n                cookiePromptDismissed\n                allowedDomainLogging\n                allowedRequestLogging\n            }\n        }\n    }\n": types.CookieShownDocument,
+    "\n    mutation DisableCookiePopup($cookiesEnabled: SelectCookieResult!) {\n        selectCookiePreferences(result: $cookiesEnabled) {\n            id\n            cookiePromptDismissed\n            allowedDomainLogging\n            allowedRequestLogging\n        }\n    }\n": types.DisableCookiePopupDocument,
 };
 
 /**
@@ -39,11 +41,15 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query GraphQLQuery {\n        getUserAvatar\n    }\n"): (typeof documents)["\n    query GraphQLQuery {\n        getUserAvatar\n    }\n"];
+export function graphql(source: "\n    query PrivacyPreferences {\n        viewer {\n            privacyPreferences {\n                allowedDomainLogging\n                allowedRequestLogging\n            }\n        }\n    }\n"): (typeof documents)["\n    query PrivacyPreferences {\n        viewer {\n            privacyPreferences {\n                allowedDomainLogging\n                allowedRequestLogging\n            }\n        }\n    }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n\tquery PrivacyPreferences {\n\t\t\tviewer {\n\t\t\t\t\tprivacyPreferences {\n              allowedDomainLogging\n              allowedRequestLogging\n\t\t\t\t\t}\n\t\t\t}\n\t}\n"): (typeof documents)["\n\tquery PrivacyPreferences {\n\t\t\tviewer {\n\t\t\t\t\tprivacyPreferences {\n              allowedDomainLogging\n              allowedRequestLogging\n\t\t\t\t\t}\n\t\t\t}\n\t}\n"];
+export function graphql(source: "\n    query CookieShown {\n        viewer {\n            id\n            privacyPreferences {\n                id\n                cookiePromptDismissed\n                allowedDomainLogging\n                allowedRequestLogging\n            }\n        }\n    }\n"): (typeof documents)["\n    query CookieShown {\n        viewer {\n            id\n            privacyPreferences {\n                id\n                cookiePromptDismissed\n                allowedDomainLogging\n                allowedRequestLogging\n            }\n        }\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation DisableCookiePopup($cookiesEnabled: SelectCookieResult!) {\n        selectCookiePreferences(result: $cookiesEnabled) {\n            id\n            cookiePromptDismissed\n            allowedDomainLogging\n            allowedRequestLogging\n        }\n    }\n"): (typeof documents)["\n    mutation DisableCookiePopup($cookiesEnabled: SelectCookieResult!) {\n        selectCookiePreferences(result: $cookiesEnabled) {\n            id\n            cookiePromptDismissed\n            allowedDomainLogging\n            allowedRequestLogging\n        }\n    }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

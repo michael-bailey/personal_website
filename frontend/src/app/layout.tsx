@@ -8,6 +8,7 @@ import StoreProvider from "@/lib/contexts/StoreProvider";
 import StaticSideBar from "@/components/server/StaticSideBar";
 import React from "react";
 import {ApolloProvider} from "@/lib/contexts/ApolloProvider";
+import CookiePopup from "@/components/client/CookiePopup";
 
 export const metadata: Metadata = {
 	title: "Michael bailey - Blog",
@@ -41,6 +42,8 @@ export default function RootLayout({
 		<body className="min-h-screen bg-blend-color-dodge">
 		<StoreProvider>
 			<ApolloProvider>
+
+				<CookiePopup />
 
 				<div
 					className={`grid min-h-screen grid-rows-[4rem_2em_auto_2em_min-content] ${grids}`}>

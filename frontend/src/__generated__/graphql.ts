@@ -29,6 +29,7 @@ export type BlogPost = Node & {
 export type Mutation = {
   __typename?: 'Mutation';
   createBlogPost: BlogPost;
+  selectCookiePreferences?: Maybe<PrivacyPreferences>;
 };
 
 
@@ -36,6 +37,11 @@ export type MutationCreateBlogPostArgs = {
   content: Scalars['String']['input'];
   name: Scalars['String']['input'];
   title: Scalars['String']['input'];
+};
+
+
+export type MutationSelectCookiePreferencesArgs = {
+  result?: InputMaybe<SelectCookieResult>;
 };
 
 export type Node = {
@@ -46,14 +52,20 @@ export type PrivacyPreferences = {
   __typename?: 'PrivacyPreferences';
   allowedDomainLogging?: Maybe<Scalars['Boolean']['output']>;
   allowedRequestLogging?: Maybe<Scalars['Boolean']['output']>;
+  cookiePromptDismissed?: Maybe<Scalars['Boolean']['output']>;
+  id?: Maybe<Scalars['ID']['output']>;
 };
 
 export type Query = {
   __typename?: 'Query';
   getBlogPosts: Array<BlogPost>;
-  getUserAvatar: Scalars['String']['output'];
   viewer?: Maybe<ViewerContext>;
 };
+
+export enum SelectCookieResult {
+  Accept = 'Accept',
+  Deny = 'Deny'
+}
 
 export type UserInfo = {
   profilePictureURL: Scalars['String']['output'];
@@ -61,20 +73,29 @@ export type UserInfo = {
 
 export type ViewerContext = {
   __typename?: 'ViewerContext';
+  id?: Maybe<Scalars['ID']['output']>;
   locale?: Maybe<Scalars['String']['output']>;
   privacyPreferences?: Maybe<PrivacyPreferences>;
 };
-
-export type GraphQlQueryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GraphQlQueryQuery = { __typename?: 'Query', getUserAvatar: string };
 
 export type PrivacyPreferencesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type PrivacyPreferencesQuery = { __typename?: 'Query', viewer?: { __typename?: 'ViewerContext', privacyPreferences?: { __typename?: 'PrivacyPreferences', allowedDomainLogging?: boolean | null, allowedRequestLogging?: boolean | null } | null } | null };
 
+export type CookieShownQueryVariables = Exact<{ [key: string]: never; }>;
 
-export const GraphQlQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GraphQLQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getUserAvatar"}}]}}]} as unknown as DocumentNode<GraphQlQueryQuery, GraphQlQueryQueryVariables>;
+
+export type CookieShownQuery = { __typename?: 'Query', viewer?: { __typename?: 'ViewerContext', id?: string | null, privacyPreferences?: { __typename?: 'PrivacyPreferences', id?: string | null, cookiePromptDismissed?: boolean | null, allowedDomainLogging?: boolean | null, allowedRequestLogging?: boolean | null } | null } | null };
+
+export type DisableCookiePopupMutationVariables = Exact<{
+  cookiesEnabled: SelectCookieResult;
+}>;
+
+
+export type DisableCookiePopupMutation = { __typename?: 'Mutation', selectCookiePreferences?: { __typename?: 'PrivacyPreferences', id?: string | null, cookiePromptDismissed?: boolean | null, allowedDomainLogging?: boolean | null, allowedRequestLogging?: boolean | null } | null };
+
+
 export const PrivacyPreferencesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PrivacyPreferences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"privacyPreferences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allowedDomainLogging"}},{"kind":"Field","name":{"kind":"Name","value":"allowedRequestLogging"}}]}}]}}]}}]} as unknown as DocumentNode<PrivacyPreferencesQuery, PrivacyPreferencesQueryVariables>;
+export const CookieShownDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CookieShown"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"privacyPreferences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"cookiePromptDismissed"}},{"kind":"Field","name":{"kind":"Name","value":"allowedDomainLogging"}},{"kind":"Field","name":{"kind":"Name","value":"allowedRequestLogging"}}]}}]}}]}}]} as unknown as DocumentNode<CookieShownQuery, CookieShownQueryVariables>;
+export const DisableCookiePopupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DisableCookiePopup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cookiesEnabled"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SelectCookieResult"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"selectCookiePreferences"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"result"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cookiesEnabled"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"cookiePromptDismissed"}},{"kind":"Field","name":{"kind":"Name","value":"allowedDomainLogging"}},{"kind":"Field","name":{"kind":"Name","value":"allowedRequestLogging"}}]}}]}}]} as unknown as DocumentNode<DisableCookiePopupMutation, DisableCookiePopupMutationVariables>;
