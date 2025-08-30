@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function PageBreadCrumbs() {
+
 	const pathname = usePathname();
 
 	const pathSegments = pathname.split("/").filter(Boolean);

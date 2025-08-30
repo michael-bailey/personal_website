@@ -8,6 +8,7 @@ import java.io.Serializable as JavaSerializable
 
 @Serializable
 data class PrivacyPreferencesCookie(
+	override val cookiePromptDismissed: Boolean = false,
 	override val allowedDomainLogging: Boolean = false,
 	override val allowedRequestLogging: Boolean = false,
 ) : IPrivacyPreferences, JavaSerializable {
