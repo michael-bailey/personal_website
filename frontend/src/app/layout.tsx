@@ -8,6 +8,7 @@ import StoreProvider from "@/lib/contexts/StoreProvider";
 import StaticSideBar from "@/components/server/StaticSideBar";
 import React from "react";
 import {ApolloProvider} from "@/lib/contexts/ApolloProvider";
+import CookiePopup from "@/components/client/CookiePopup";
 
 export const metadata: Metadata = {
 	title: "Michael bailey - Blog",
@@ -42,18 +43,20 @@ export default function RootLayout({
 		<StoreProvider>
 			<ApolloProvider>
 
+				<CookiePopup />
+
 				<div
 					className={`grid min-h-screen grid-rows-[4rem_2em_auto_2em_min-content] ${grids}`}>
 
 					<h2
-						className="xl:col-start-1 row-start-1 text-center justify-self-center align-middle content-center text-2xl ">Michael
+						className="hidden xl:block xl:col-start-1 row-start-1 text-center justify-self-center align-middle content-center text-2xl ">Michael
 						Bailey</h2>
 
 					<StaticSideBar
-						className={`hidden xl:block xl:col-start-1 row-start-3 row-span-full p-4 `} />
+						className={`hidden xl:block col-start-1 row-start-3 row-span-full p-4 `} />
 
-					<SectionSpacer className={`h-8 row-start-2 col-start-1`} />
-					<SectionSpacer className={`h-8 row-start-4 col-start-1`} />
+					<SectionSpacer className={`hidden xl:block h-8 row-start-2 col-start-1`} />
+					<SectionSpacer className={`hidden xl:block h-8 row-start-4 col-start-1`} />
 
 					<BlueprintEmptySpace className={`${first_spacer} row-span-6`} />
 

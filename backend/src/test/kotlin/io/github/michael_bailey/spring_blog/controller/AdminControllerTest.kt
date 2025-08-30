@@ -1,13 +1,15 @@
 package io.github.michael_bailey.spring_blog.controller
 
 import io.github.michael_bailey.spring_blog.config.WebSecurityConfig
+import io.github.michael_bailey.spring_blog.filter.AnalyticsFilter
+import io.github.michael_bailey.spring_blog.filter.ViewerContextFilter
 import io.github.michael_bailey.spring_blog.service.BlogService
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.FilterType
 import org.springframework.context.annotation.Import
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.context.ActiveProfiles
@@ -17,10 +19,20 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.view
 
-@AutoConfigureMockMvc(addFilters = true)
-@ActiveProfiles("test")
+@WebMvcTest(
+	controllers = [AdminController::class],
+	excludeFilters = [
+		ComponentScan.Filter(
+			type = FilterType.ASSIGNABLE_TYPE,
+			classes = [
+				ViewerContextFilter::class,
+				AnalyticsFilter::class,
+			],
+		)
+	]
+)
 @Import(WebSecurityConfig::class)
-@WebMvcTest(AdminController::class)
+@ActiveProfiles("test")
 class AdminControllerTest {
 
 	@Autowired
@@ -33,13 +45,12 @@ class AdminControllerTest {
 	fun `Attempt to load admin panel when logged out`() {
 		mockMvc.get("/admin")
 			.andExpect {
-				status { is3xxRedirection() }
-				view().name("login")
+				status { isForbidden() }
 			}
 	}
 
 	@Test
-	@WithMockUser(username = "TestUser", roles = ["USER", "ADMIN"])
+	@WithMockUser(username = "TestUser", authorities = ["ADMIN"])
 	fun `Attempt to load admin panel when logged in`() {
 		mockMvc.get("/admin")
 			.andExpect {
@@ -52,13 +63,12 @@ class AdminControllerTest {
 	fun `Attempt to create post when logged out`() {
 		mockMvc.post("/admin/create-post")
 			.andExpect {
-				status { is3xxRedirection() }
-				view().name("/login")
+				status { isForbidden() }
 			}
 	}
 
 	@Test
-	@WithMockUser(username = "TestUser", roles = ["USER", "ADMIN"])
+	@WithMockUser(username = "TestUser", authorities = ["ADMIN"])
 	fun `Creates new article`() {
 
 		val name = "test post"

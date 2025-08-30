@@ -2,19 +2,27 @@ package io.github.michael_bailey.spring_blog.controller
 
 import io.github.michael_bailey.spring_blog.service.BlogService
 import jakarta.servlet.http.HttpServletResponse
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 
-@Controller()
+@Controller
 @RequestMapping("/admin")
 class AdminController(private val blogService: BlogService) {
 
-	@GetMapping
-	fun adminIndex(): String = "adminIndex"
+	private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
+	@GetMapping
+	fun adminIndex(): String {
+
+		logger.info("Rendering admin index page")
+
+		return "adminIndex"
+	}
 	@PostMapping("/create-post")
 	fun createPost(
 		@RequestParam name: String,
