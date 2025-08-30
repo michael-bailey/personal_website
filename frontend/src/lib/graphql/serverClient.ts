@@ -8,7 +8,7 @@ import {getApiBase} from "@/lib/environment";
 
 export const {getClient, query, PreloadQuery} = registerApolloClient(() => {
 
-	const url = `${getApiBase()}/graphql`
+	const url = `${getApiBase(true)}/graphql`
 
 	return new ApolloClient({
 		cache: new InMemoryCache(),

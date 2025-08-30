@@ -15,13 +15,16 @@ export default async function StaticSideBar({className}: SideBarProps): Promise<
 
 	return (
 		<aside
-			className={"grid grid-rows-[] w-full h-full " + className}>
+			className={"grid w-full h-full bg-none " + className}>
 
 			<div
-				className="grid grid-cols-1 gap-0.25 rounded-md bg-gray-200 auto-rows-auto ">
+				className="grid grid-cols-1 gap-0.25 rounded-md bg-none auto-rows-auto ">
 
 				<SideBarHeader text="Pages" />
 				<SideBarLink isActive={path === "/"} href="/" text="About Me" />
+				<SideBarLink
+					isActive={path === "/settings"} href="/settings"
+					text="Settings" />
 				<SideBarLink
 					isActive={path === "/wip"} href="/wip" text="Work In Progress" />
 				<SideBarLink

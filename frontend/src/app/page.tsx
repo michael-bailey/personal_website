@@ -2,27 +2,13 @@ import SectionedContent from "@/components/server/SectionedContent";
 import Section from "@/components/server/Section";
 import ProjectSection from "@/components/server/ProjectSection";
 import {getImageUrl} from "@/lib/api/staticContent";
-import Image from "next/image";
-import {query} from "@/lib/graphql/serverClient";
-import { gql } from "@apollo/client";
-
-
-const avatarUrlQuery = gql`
-    query GraphQLQuery {
-        getUserAvatar
-    }
-`
 
 export default async function Home() {
-
-	const avatarUrl = await query({ query: avatarUrlQuery })
-		.then(res => res.data.getUserAvatar as string)
 
 	return (
 		<div className="h-full grid pt-2">
 			<SectionedContent>
 				<Section>
-					<Image className="float-right mx-8 rounded-2xl shadow-lg max-w-44" src={avatarUrl} alt="profile image" width={512} height={512}  />
 					<div className="p-0">
 						<h1 className="text-6xl">Welcome</h1>
 						<hr className="py-2" />
@@ -60,7 +46,7 @@ export default async function Home() {
 					<ProjectSection
 						projectName="Gym Log Book"
 						githubUrl="https://github.com/michael-bailey/gym-log-book">
-						<Image
+						<img
 							className="float-right mx-8 rounded-2xl shadow-lg max-w-44"
 							src={getImageUrl("gym_list.png")} alt="Gym Log Book app screenshot"
 							width={512} height={512}
@@ -96,8 +82,8 @@ export default async function Home() {
 
 					<ProjectSection
 						projectName="Compass"
-						githubUrl={`https://github.com/michael-bailey/Compass}`}>
-						<Image
+						githubUrl={`https://github.com/michael-bailey/Compass`}>
+						<img
 							className="block float-right mx-8 rounded-2xl shadow-lg max-w-44"
 							src={getImageUrl("Compass_Android.png")}
 							alt="compass app screenshot"

@@ -1,24 +1,34 @@
 package io.github.michael_bailey.spring_blog.controller
 
 import io.github.michael_bailey.spring_blog.config.WebSecurityConfig
-import org.junit.jupiter.api.Assertions.*
+import io.github.michael_bailey.spring_blog.filter.AnalyticsFilter
+import io.github.michael_bailey.spring_blog.filter.ViewerContextFilter
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.FilterType
 import org.springframework.context.annotation.Import
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.view
 
-@AutoConfigureMockMvc(addFilters = true)
-@ActiveProfiles("test")
+@WebMvcTest(
+	controllers = [LoginController::class],
+	excludeFilters = [
+		ComponentScan.Filter(
+			type = FilterType.ASSIGNABLE_TYPE,
+			classes = [
+				ViewerContextFilter::class,
+				AnalyticsFilter::class,
+			],
+		)
+	]
+)
 @Import(WebSecurityConfig::class)
-@WebMvcTest(LoginController::class)
+@ActiveProfiles("test")
 class LoginControllerTest {
 
 	@Autowired
@@ -34,7 +44,7 @@ class LoginControllerTest {
 	}
 
 	@Test
-	@WithMockUser(username = "testuser")
+	@WithMockUser(username = "TestUser", roles = ["ADMIN"])
 	fun `authenticated user should be redirected to admin`() {
 		mockMvc.get("/login")
 			.andExpect {
