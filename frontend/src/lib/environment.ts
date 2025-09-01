@@ -1,3 +1,3 @@
-export const getApiBase = () => {
-	return process.env.API_HOSTNAME || process.env.NEXT_PUBLIC_API_HOSTNAME
+export const getApiBase = (isSSR: boolean) => {
+	return isSSR ? (process.env.API_HOSTNAME ?? "Set this up better") : ""
 }
