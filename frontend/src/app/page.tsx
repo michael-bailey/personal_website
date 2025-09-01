@@ -2,11 +2,8 @@ import SectionedContent from "@/components/server/SectionedContent";
 import Section from "@/components/server/Section";
 import ProjectSection from "@/components/server/ProjectSection";
 import {getImageUrl} from "@/lib/api/staticContent";
-import Image from "next/image";
 
 export default async function Home() {
-
-	const a = getImageUrl("Compass_Android.png")
 
 	return (
 		<div className="h-full grid pt-2">
@@ -49,7 +46,7 @@ export default async function Home() {
 					<ProjectSection
 						projectName="Gym Log Book"
 						githubUrl="https://github.com/michael-bailey/gym-log-book">
-						<Image
+						<img
 							className="float-right mx-8 rounded-2xl shadow-lg max-w-44"
 							src={getImageUrl("gym_list.png")} alt="Gym Log Book app screenshot"
 							width={512} height={512}
@@ -86,7 +83,7 @@ export default async function Home() {
 					<ProjectSection
 						projectName="Compass"
 						githubUrl={`https://github.com/michael-bailey/Compass`}>
-						<Image
+						<img
 							className="block float-right mx-8 rounded-2xl shadow-lg max-w-44"
 							src={getImageUrl("Compass_Android.png")}
 							alt="compass app screenshot"
