@@ -4,6 +4,7 @@ import ProjectSection from "@/components/server/ProjectSection";
 import {getImageUrl} from "@/lib/api/staticContent";
 
 export default async function Home() {
+
 	return (
 		<div className="h-full grid pt-2">
 			<SectionedContent>
