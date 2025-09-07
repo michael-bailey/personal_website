@@ -59,8 +59,8 @@ export default function PrivacyCookieToggles(): ReactElement {
 
 	useEffect(() => {
 		Promise.all([
-			// launchQuery(),
-			// fetchCookies()
+			launchQuery(),
+			fetchCookies()
 		]).then()
 	}, [fetchCookies, launchQuery])
 
