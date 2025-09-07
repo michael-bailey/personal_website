@@ -26,7 +26,6 @@ FROM node:20-slim AS built
 
 WORKDIR /app
 COPY --from=build /build/frontend/.next/standalone /app
-COPY --from=build /build/frontend/public /app/public
 COPY --from=build /build/frontend/.next/static /app/.next/static
 
 RUN npm install
