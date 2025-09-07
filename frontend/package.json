@@ -13,7 +13,7 @@
     "@apollo/client": "^3.13.8",
     "@apollo/client-integration-nextjs": "^0.12.2",
     "@reduxjs/toolkit": "^2.8.2",
-    "next": "15.3.4",
+    "next": "15.4.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0"

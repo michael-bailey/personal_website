@@ -1,7 +1,9 @@
+name: "Local personal website"
+
 services:
   postgres:
     image: postgres:16
-    container_name: spring-blog-db
+    container_name: local-spring-blog-postgres
     environment:
       POSTGRES_DB: blogdb
       POSTGRES_USER: ${POSTGRES_USER}
@@ -13,7 +15,7 @@ services:
     build:
       context: ../
       dockerfile: ./backend/docker/Dockerfile
-    container_name: spring-blog-app
+    container_name: local-spring-blog-app
     ports:
       - "8484:8080"
     depends_on:
@@ -29,9 +31,9 @@ services:
 
   next-blog-app:
     build:
-      context: ../frontend
-      dockerfile: ./docker/Dockerfile
-    container_name: next-blog-app
+      context: ../
+      dockerfile: ./frontend/docker/Dockerfile
+    container_name: local-next-blog-app
     depends_on:
       - spring-blog-app
     ports:
@@ -43,7 +45,7 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: spring-blog-nginx-dev
+    container_name: local-spring-blog-nginx
     ports:
       - "80:80"
     volumes:
@@ -51,3 +53,4 @@ services:
 
 volumes:
   pgdata:
+    name: "spring-blog-pgdata"
