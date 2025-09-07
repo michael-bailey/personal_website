@@ -29,6 +29,8 @@ class JavascriptProject : Plugin<Project> {
 		}
 
 		project.tasks.register("RunBuild", RunNpmCommandTask::class.java) { task ->
+			task.dependsOn("RunInstall")
+
 			task.group = group
 			task.workingDir = project.projectDir
 

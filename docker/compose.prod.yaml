@@ -13,8 +13,6 @@ services:
   spring-blog-app:
     image: ghcr.io/michael-bailey/personal_website-backend:latest
     container_name: spring-blog-app
-    ports:
-      - "8484:8080"
     depends_on:
       - postgres
     environment:
@@ -25,18 +23,18 @@ services:
   nextjs-blog-app:
     image: ghcr.io/michael-bailey/personal_website-frontend:latest
     container_name: next-blog-app
-    ports:
-      - "8485:3000"
-    depends_on:
-      - spring-blog-app
     environment:
       HOST: 0.0.0.0
+      NEXT_PUBLIC_API_HOSTNAME: http://spring-blog-app
       API_HOSTNAME: http://spring-blog-app
 
   nginx:
     image: nginx:latest
-    container_name: spring-blog-nginx-dev
+    container_name: local-spring-blog-nginx
+    depends_on:
+      - spring-blog-app
+      - nextjs-blog-app
     ports:
-      - "80:80"
+      - "81:81"
     volumes:
-      - ./default.dev.conf:/etc/nginx/conf.d/default.dev.conf
+      - ./default.conf:/etc/nginx/conf.d/default.conf

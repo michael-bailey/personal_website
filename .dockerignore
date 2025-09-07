@@ -1,0 +1,24 @@
+backend/docs/HELP.md
+.gradle
+build/
+
+
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+
+### Kotlin ###
+.kotlin
+
+### NodeJS ###
+**/.next/
+**/node_modules/
+
+### DANGEROUS
+**/.env

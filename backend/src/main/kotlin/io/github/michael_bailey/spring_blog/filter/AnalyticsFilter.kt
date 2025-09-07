@@ -35,9 +35,11 @@ class AnalyticsFilter(
 
 		logger.info("REQUEST_ID: ${vc.requestId}")
 
+		val remoteAddr = request.getHeader("X-Real-IP") ?: request.remoteAddr
+
 		if (vc.privacyPreferences.allowedDomainLogging) {
 			logger.info("Logging domain data")
-			analyticsService.logRequestDomain(vc.requestId, request.remoteAddr)
+			analyticsService.logRequestDomain(vc.requestId, remoteAddr)
 		} else {
 			null
 		}
