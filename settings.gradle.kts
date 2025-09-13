@@ -4,3 +4,5 @@ include("backend")
 include("frontend")
 
 includeBuild("plugins")
+include("processors")
+include("metadata")
