@@ -17,8 +17,8 @@ spec:
           image: ghcr.io/michael-bailey/personal_website:pr-44
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8000
           readinessProbe:
             httpGet:
               path: /
-              port: 8080
+              port: 8000

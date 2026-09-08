@@ -66,11 +66,11 @@ spec:
                       image: ghcr.io/michael-bailey/personal_website:sha-{{.head_sha}}
                       imagePullPolicy: Always
                       ports:
-                        - containerPort: 8080
+                        - containerPort: 8000
                       readinessProbe:
                         httpGet:
                           path: /
-                          port: 8080
+                          port: 8000
 
       destination:
         server: https://kubernetes.default.svc
